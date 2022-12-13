@@ -6,7 +6,7 @@ class PostsService {
 
   //게시글 생성
   createPost = async ({ title, content, userId, nickname }) => {
-    await this.postsRepository.creatPost({ title, content, userId, nickname });
+    return await this.postsRepository.creatPost({ title, content, userId, nickname });
   };
 
   //게시글 조회
@@ -19,7 +19,7 @@ class PostsService {
   findAllLikePost = async ({ userId }) => {
     const likePosts = await this.postsRepository.findAllLikePost({ userId });
     if (likePosts.length === 0) {
-      throw new Error();
+      throw { message: "내가 좋아요 한 게시글이 없습니다.", code: 404 };
     } else {
       return likePosts;
     }
@@ -33,39 +33,23 @@ class PostsService {
   updatePost = async ({ userId, postId, title, content }) => {
     const isExisPost = await this.postsRepository.findDetailPost({ postId });
     if (userId === isExisPost.userId) {
-      await this.postsRepository.updatePost({ postId, title, content });
-      return { message: "게시글을 수정하였습니다.", code: 200 };
+      return await this.postsRepository.updatePost({ postId, title, content });
     } else {
-      return { messgae: "내가 작성한 게시글이 아니면 수정할 수 없습니다." };
+      throw { messgae: "내가 작성한 게시글이 아니면 수정할 수 없습니다.", code: 400 };
     }
   };
   //게시글 삭제
   deletePost = async ({ userId, postId }) => {
     const isExisPost = await this.postsRepository.findDetailPost({ postId });
+    console.log(isExisPost);
     if (!isExisPost) {
-      throw new Error("게시글 존재하지 않습니다.", 404);
+      throw { message: "게시글 존재하지 않습니다.", code: 404 };
     } else {
       if (userId === isExisPost.userId) {
-        await this.postsRepository.deletePost({ postId });
+        return await this.postsRepository.deletePost({ postId });
       } else {
-        throw new Error("내가 작성한 게시글이 아니면 삭제할 수 없습니다.", 888);
+        throw { message: "내가 작성한 게시글이 아니면 삭제할 수 없습니다.", code: 400 };
       }
-    }
-  };
-
-  //게시글 좋아요
-  putLikePost = async ({ userId, postId }) => {
-    const isExisPost = await this.postsRepository.findDetailPost({ postId });
-    if (!isExisPost) {
-      throw new Error("게시글이 존재하지 않습니다.", 404);
-    }
-    const isExisLike = await this.postsRepository.postsLike({ userId, postId });
-    if (!isExisLike) {
-      await this.postsRepository.createPostLike({ userId, postId });
-      return { message: "게시글 좋아요" };
-    } else {
-      await this.postsRepository.deletePostLike({ userId, postId });
-      return { message: "게시글 좋아요 취소" };
     }
   };
 }
