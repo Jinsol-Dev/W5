@@ -4,6 +4,7 @@ class PostsRepository {
   constructor(postModel, postLikeModel) {
     this.postModel = postModel;
     this.postLikeModel = postLikeModel;
+    console.log(postModel)
   }
 
   //게시글 생성
@@ -43,7 +44,9 @@ class PostsRepository {
   //게시글 상세 조회
   findDetailPost = async ({ postId }) => {
     const post = await this.postModel.findByPk(postId);
+    console.log(post)
     return post;
+    
   };
 
   //게시글 수정
