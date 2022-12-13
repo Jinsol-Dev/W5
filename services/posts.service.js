@@ -6,8 +6,7 @@ class PostsService {
 
   //게시글 생성
   createPost = async ({ title, content, userId, nickname }) => {
-    const post = await this.postsRepository.creatPost({ title, content, userId, nickname });
-    return post;
+    await this.postsRepository.creatPost({ title, content, userId, nickname });
   };
 
   //게시글 조회
@@ -19,7 +18,11 @@ class PostsService {
   //좋아요 게시글 조회
   findAllLikePost = async ({ userId }) => {
     const likePosts = await this.postsRepository.findAllLikePost({ userId });
-    return likePosts;
+    if (likePosts.length === 0) {
+      throw new Error();
+    } else {
+      return likePosts;
+    }
   };
   //게시글 상세 조회
   findDetailPost = async ({ postId }) => {
@@ -30,10 +33,10 @@ class PostsService {
   updatePost = async ({ userId, postId, title, content }) => {
     const isExisPost = await this.postsRepository.findDetailPost({ postId });
     if (userId === isExisPost.userId) {
-      const post = await this.postsRepository.updatePost({ postId, title, content });
-      return post;
+      await this.postsRepository.updatePost({ postId, title, content });
+      return { message: "게시글을 수정하였습니다.", code: 200 };
     } else {
-      throw new Error("내가 작성한 게시글이 아니면 수정할 수 없습니다.");
+      return { messgae: "내가 작성한 게시글이 아니면 수정할 수 없습니다." };
     }
   };
   //게시글 삭제
@@ -43,11 +46,26 @@ class PostsService {
       throw new Error("게시글 존재하지 않습니다.", 404);
     } else {
       if (userId === isExisPost.userId) {
-        const post = await this.postsRepository.deletePost({ postId });
-        return post;
+        await this.postsRepository.deletePost({ postId });
       } else {
-        throw new Error("내가 작성한 게시글이 아니면 삭제할 수 없습니다.");
+        throw new Error("내가 작성한 게시글이 아니면 삭제할 수 없습니다.", 888);
       }
+    }
+  };
+
+  //게시글 좋아요
+  putLikePost = async ({ userId, postId }) => {
+    const isExisPost = await this.postsRepository.findDetailPost({ postId });
+    if (!isExisPost) {
+      throw new Error("게시글이 존재하지 않습니다.", 404);
+    }
+    const isExisLike = await this.postsRepository.postsLike({ userId, postId });
+    if (!isExisLike) {
+      await this.postsRepository.createPostLike({ userId, postId });
+      return { message: "게시글 좋아요" };
+    } else {
+      await this.postsRepository.deletePostLike({ userId, postId });
+      return { message: "게시글 좋아요 취소" };
     }
   };
 }
