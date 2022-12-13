@@ -12,12 +12,7 @@ class PostsController {
       if (!title || !content) {
         throw new Error("데이터 형식이 올바르지 않습니다.", 412);
       }
-      await this.postsService.createPost({
-        title,
-        content,
-        userId,
-        nickname,
-      });
+      await this.postsService.createPost({ title, content, userId, nickname });
       res.json({ message: "게시글 작성에 성공하였습니다." });
     } catch (err) {
       console.error(err);
@@ -42,8 +37,8 @@ class PostsController {
       const { userId } = res.locals.user;
       const likePosts = await this.postsService.findAllLikePost({ userId });
       res.json({ likePosts });
-    } catch {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
       res.status(400).json({ errorMessage: "좋아요 게시글 조회에 실패하였습니다." });
     }
   };
@@ -67,8 +62,8 @@ class PostsController {
       const { postId } = req.params;
       const { title, content } = req.body;
       if (!title || !content) return res.status(412).json({ message: "데이터 형식이 올바르지 않습니다.3" });
-      await this.postsService.updatePost({ userId, postId, title, content });
-      return res.json({ message: "게시글을 수정하였습니다." });
+      const response = await this.postsService.updatePost({ userId, postId, title, content });
+      return res.status(response.code).json({ message: response.message });
     } catch (err) {
       console.error(err);
       return res.status(400).json({ message: err.message });
@@ -85,6 +80,19 @@ class PostsController {
     } catch (err) {
       console.error(err);
       return res.status(400).json({ message: err.message });
+    }
+  };
+
+  // 게시글 좋아요
+  putLikePost = async (req, res) => {
+    try {
+      const { userId } = res.locals.user;
+      const { postId } = req.params;
+      const response = await this.postsService.putLikePost({ userId, postId });
+      return res.json({ message: response.message });
+    } catch (err) {
+      console.error(err);
+      res.status(400).json({ errorMessage: "게시글 좋아요에 실패하였습니다." });
     }
   };
 }
