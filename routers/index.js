@@ -10,8 +10,4 @@ router.use("/", signRouter);
 router.use("/posts", [postsRouter, likeRouter]);
 router.use("/comments", commentsRouter);
 
-router.get("/", (req, res) => {
-  res.send("Hello");
-});
-
 module.exports = router;
