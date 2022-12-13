@@ -23,7 +23,5 @@ router.put("/:postId", auth, postsController.updatePost);
 //게시글 삭제
 router.delete("/:postId", auth, postsController.deletePost);
 
-//게시글 좋아요
-router.put("/:postId/like", auth, postsController.putLikePost);
 
 module.exports = router;

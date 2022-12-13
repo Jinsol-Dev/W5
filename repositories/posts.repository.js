@@ -4,7 +4,7 @@ class PostsRepository {
   constructor(postModel, postLikeModel) {
     this.postModel = postModel;
     this.postLikeModel = postLikeModel;
-    console.log(postModel)
+    
   }
 
   //게시글 생성
@@ -36,8 +36,7 @@ class PostsRepository {
 
   //게시글 상세 조회
   findDetailPost = async ({ postId }) => {
-    const post = await this.postModel.findByPk(postId);
-    console.log(post)
+    const post = await this.postModel.findByPk(postId);    
     return post;
     
   };
@@ -52,21 +51,6 @@ class PostsRepository {
     await this.postModel.destroy({ where: { postId } });
   };
 
-  //좋아요가 있는지 없는지 확인
-  postsLike = async ({ userId, postId }) => {
-    const isExisLike = await this.postLikeModel.findOne({ where: { postId, userId } });
-    return isExisLike;
-  };
-
-  //좋아요 생성
-  createPostLike = async ({ userId, postId }) => {
-    await this.postLikeModel.create({ userId, postId });
-  };
-
-  //좋아요 삭제
-  deletePostLike = async ({ userId, postId }) => {
-    await this.postLikeModel.destroy({ where: { userId, postId } });
-  };
-}
+};
 
 module.exports = PostsRepository;

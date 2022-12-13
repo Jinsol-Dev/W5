@@ -53,21 +53,6 @@ class PostsService {
     }
   };
 
-  //게시글 좋아요
-  putLikePost = async ({ userId, postId }) => {
-    const isExisPost = await this.postsRepository.findDetailPost({ postId });
-    if (!isExisPost) {
-      throw new Error("게시글이 존재하지 않습니다.", 404);
-    }
-    const isExisLike = await this.postsRepository.postsLike({ userId, postId });
-    if (!isExisLike) {
-      await this.postsRepository.createPostLike({ userId, postId });
-      return { message: "게시글 좋아요" };
-    } else {
-      await this.postsRepository.deletePostLike({ userId, postId });
-      return { message: "게시글 좋아요 취소" };
-    }
-  };
-}
+};
 
 module.exports = PostsService;

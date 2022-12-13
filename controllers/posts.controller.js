@@ -83,18 +83,7 @@ class PostsController {
     }
   };
 
-  // 게시글 좋아요
-  putLikePost = async (req, res) => {
-    try {
-      const { userId } = res.locals.user;
-      const { postId } = req.params;
-      const response = await this.postsService.putLikePost({ userId, postId });
-      return res.json({ message: response.message });
-    } catch (err) {
-      console.error(err);
-      res.status(400).json({ errorMessage: "게시글 좋아요에 실패하였습니다." });
-    }
-  };
+  
 }
 
 module.exports = PostsController;

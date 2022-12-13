@@ -15,8 +15,7 @@ class PostsLikeService {
             throw new Error ("게시글이 존재하지 않습니다.", 404)
         }
        
-        const postsLike = await this.postsLikeRepository.postsLike({ userId, postId })
-        console.log(postsLike)
+        const postsLike = await this.postsLikeRepository.postsLike({ userId, postId })        
         if (!postsLike) {
           await this.postsLikeRepository.createPostLike({ userId, postId })
           return { message: "게시글 좋아"};
