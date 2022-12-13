@@ -42,6 +42,8 @@ class SignController {
       const { nickname, password } = req.body;
       const token = await this.signService.login(nickname, password);
 
+      res.cookie("token", token);
+
       res.status(200).json({ data: token });
     } catch (error) {
       console.error(error);

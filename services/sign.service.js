@@ -17,7 +17,7 @@ class SignService {
     if (!user || password !== user.password) {
       return "닉네임 또는 패스워드가 틀렸습니다.";
     }
-
+    
     return token;
   };
 }
