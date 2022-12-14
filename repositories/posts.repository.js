@@ -1,9 +1,9 @@
-const { Postlikes, sequelize } = require("../models");
+const { Posts, Postlikes, sequelize } = require("../models");
 
 class PostsRepository {
-  constructor(postsModel, postLikeModel) {
-    this.postsModel = postsModel;
-    this.postLikeModel = postLikeModel;
+  constructor() {
+    this.postsModel = Posts;
+    this.postLikeModel = Postlikes;    
   }
 
   //게시글 생성
