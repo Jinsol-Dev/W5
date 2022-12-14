@@ -2,7 +2,9 @@ const SignRepository = require("../repositories/sign.repository");
 const jwt = require("jsonwebtoken");
 
 class SignService {
-  signRepository = new SignRepository();
+  constructor() {
+    this.signRepository = new SignRepository();
+  }
 
   createUser = async (nickname, password) => {
     const createUserData = await this.signRepository.createUser(nickname, password);
@@ -17,7 +19,7 @@ class SignService {
     if (!user || password !== user.password) {
       return "닉네임 또는 패스워드가 틀렸습니다.";
     }
-    
+
     return token;
   };
 }
