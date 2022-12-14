@@ -1,19 +1,19 @@
-const { sequelize } = require("../models");
+const { Postlikes, sequelize } = require("../models");
 
 class PostsRepository {
-  constructor(postModel, postLikeModel) {
-    this.postModel = postModel;
+  constructor(postsModel, postLikeModel) {
+    this.postsModel = postsModel;
     this.postLikeModel = postLikeModel;
   }
 
   //게시글 생성
   creatPost = async ({ title, content, userId, nickname }) => {
-    this.postModel.create({ title, content, userId, nickname });
+    await this.postsModel.create({ title, content, userId, nickname });
   };
 
   //게시글 목록 조회
   findAllPost = async () => {
-    const posts = await this.postModel.findAll({
+    const posts = await this.postsModel.findAll({
       order: [["postId", "DESC"]],
       include: [{ model: this.postLikeModel, attributes: [] }],
       attributes: ["postId", "userId", "nickname", "title", "createdAt", "updatedAt", [sequelize.fn("COUNT", sequelize.col("Postlikes.userId")), "likes"]],
@@ -22,30 +22,20 @@ class PostsRepository {
     return posts;
   };
 
-  //좋아요 게시글 조회
-  findAllLikePost = async ({ userId }) => {
-    const likePosts = await this.postLikeModel.findAll({
-      where: { userId },
-      include: [{ model: this.postModel, attributes: ["postId", "userId", "nickname", "title", "createdAt", "updatedAt"] }],
-      attributes: [],
-    });
-    return likePosts;
-  };
-
   //게시글 상세 조회
   findDetailPost = async ({ postId }) => {
-    const post = await this.postModel.findByPk(postId);
+    const post = await this.postsModel.findByPk(postId);
     return post;
   };
 
   //게시글 수정
   updatePost = async ({ postId, title, content }) => {
-    await this.postModel.update({ title: title, content: content }, { where: { postId } });
+    await this.postsModel.update({ title: title, content: content }, { where: { postId } });
   };
 
   //게시글 삭제
   deletePost = async ({ postId }) => {
-    await this.postModel.destroy({ where: { postId } });
+    await this.postsModel.destroy({ where: { postId } });
   };
 }
 

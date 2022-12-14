@@ -11,9 +11,6 @@ router.post("/", auth, postsController.createPost);
 //게시글 목록 조회
 router.get("/", postsController.findAllPosts);
 
-//좋아요 게시글 조회
-router.get("/like", auth, postsController.getLikePost);
-
 //게시글 조회
 router.get("/:postId", postsController.getDetailPost);
 

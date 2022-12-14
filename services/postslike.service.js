@@ -3,7 +3,7 @@ const PostsRepository = require("../repositories/posts.repository");
 const { Posts, Postlikes } = require("../models");
 
 class PostsLikeService {
-  postsLikeRepository = new PostsLikeRepository(Postlikes);
+  postsLikeRepository = new PostsLikeRepository(Postlikes, Posts);
   postsRepository = new PostsRepository(Posts);
 
   //게시글 좋아요 등록
@@ -20,6 +20,16 @@ class PostsLikeService {
     } else {
       await this.postsLikeRepository.deletePostLike({ userId, postId });
       return { message: "게시글 좋아요 취소" };
+    }
+  };
+
+  //좋아요 게시글 조회
+  findAllLikePost = async ({ userId }) => {
+    const likePosts = await this.postsLikeRepository.findAllLikePost({ userId });
+    if (likePosts.length === 0) {
+      throw { message: "내가 좋아요 한 게시글이 없습니다.", code: 404 };
+    } else {
+      return likePosts;
     }
   };
 }
