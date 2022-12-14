@@ -1,11 +1,12 @@
 const PostsLikeRepository = require("../repositories/postslike.repository");
 const PostsRepository = require("../repositories/posts.repository");
-const { Posts, Postlikes } = require("../models");
 
 class PostsLikeService {
-  postsLikeRepository = new PostsLikeRepository(Postlikes, Posts);
-  postsRepository = new PostsRepository(Posts);
-
+  constructor () {
+    this.postsLikeRepository = new PostsLikeRepository();
+    this.postsRepository = new PostsRepository();
+  }
+  
   //게시글 좋아요 등록
   createPostLike = async ({ userId, postId }) => {
     const isExistPost = await this.postsRepository.findDetailPost({ postId });
