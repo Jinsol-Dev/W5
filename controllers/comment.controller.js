@@ -1,8 +1,9 @@
 const CommentService = require("../services/comment.service");
 
 class CommentController {
-  commentService = new CommentService();
-
+  constructor() {
+    this.commentService = new CommentService();
+  }
   //댓글 작성
   createComment = async (req, res) => {
     const { comment } = req.body;
