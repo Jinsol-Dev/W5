@@ -35,22 +35,6 @@ class PostsController {
     }
   };
 
-  //좋아요 게시글 조회
-  getLikePost = async (req, res) => {
-    try {
-      const { userId } = res.locals.user;
-      const likePosts = await this.postsService.findAllLikePost({ userId });
-      res.json({ likePosts });
-    } catch (err) {
-      console.log(err);
-      if (err.code) {
-        return res.status(err.code).json({ message: err.message });
-      } else {
-        return res.status(400).json({ errorMessage: "좋아요 게시글 조회에 실패하였습니다." });
-      }
-    }
-  };
-
   //게시글 상세 조회
   getDetailPost = async (req, res) => {
     try {

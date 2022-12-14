@@ -15,15 +15,6 @@ class PostsService {
     return posts;
   };
 
-  //좋아요 게시글 조회
-  findAllLikePost = async ({ userId }) => {
-    const likePosts = await this.postsRepository.findAllLikePost({ userId });
-    if (likePosts.length === 0) {
-      throw { message: "내가 좋아요 한 게시글이 없습니다.", code: 404 };
-    } else {
-      return likePosts;
-    }
-  };
   //게시글 상세 조회
   findDetailPost = async ({ postId }) => {
     const post = await this.postsRepository.findDetailPost({ postId });

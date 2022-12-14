@@ -1,35 +1,25 @@
-const { sequelize } = require("../models");
+const { Postlikes, sequelize } = require("../models");
 
 class PostsRepository {
-  constructor(postsModel, postLikesModel) {
-    this.postModel = postsModel;
-    this.postLikeModel = postLikesModel;
+  constructor(postsModel, postLikeModel) {
+    this.postsModel = postsModel;
+    this.postLikeModel = postLikeModel;
   }
 
   //게시글 생성
   creatPost = async ({ title, content, userId, nickname }) => {
-    this.postsModel.create({ title, content, userId, nickname });
+    await this.postsModel.create({ title, content, userId, nickname });
   };
 
   //게시글 목록 조회
   findAllPost = async () => {
     const posts = await this.postsModel.findAll({
       order: [["postId", "DESC"]],
-      include: [{ model: this.postLikesModel, attributes: [] }],
+      include: [{ model: this.postLikeModel, attributes: [] }],
       attributes: ["postId", "userId", "nickname", "title", "createdAt", "updatedAt", [sequelize.fn("COUNT", sequelize.col("Postlikes.userId")), "likes"]],
       group: "postId",
     });
     return posts;
-  };
-
-  //좋아요 게시글 조회
-  findAllLikePost = async ({ userId }) => {
-    const likePosts = await this.postLikesModel.findAll({
-      where: { userId },
-      include: [{ model: this.postsModel, attributes: ["postId", "userId", "nickname", "title", "createdAt", "updatedAt"] }],
-      attributes: [],
-    });
-    return likePosts;
   };
 
   //게시글 상세 조회
