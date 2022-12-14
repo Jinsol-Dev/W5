@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { Posts, Users, Comments } = require("../models");
+const { Posts, Comments } = require("../models");
 const auth = require("../middleware/auth");
 
 //댓글생성
@@ -11,9 +11,7 @@ router.post("/:postId", auth, async (req, res) => {
     const { userId, nickname } = res.locals.user;
     const post = await Posts.findByPk(postId);
     if (comment == "") {
-      return res
-        .status(400)
-        .json({ errorMessage: "댓글 내용을 입력해주세요." });
+      return res.status(400).json({ errorMessage: "댓글 내용을 입력해주세요." });
     } else {
       if (postId == post.postId) {
         await Comments.create({ userId, nickname, comment, postId });
@@ -50,22 +48,16 @@ router.put("/:commentId", auth, async (req, res) => {
     const { comment } = req.body;
     const comments = await Comments.findByPk(commentId);
     if (!comment) {
-      return res
-        .status(412)
-        .json({ errorMessage: "데이터 형식이 올바르지 않습니다." });
+      return res.status(412).json({ errorMessage: "데이터 형식이 올바르지 않습니다." });
     }
     if (!comments) {
-      return res
-        .status(404)
-        .json({ errorMessage: "댓글이 존재하지 않습니다." });
+      return res.status(404).json({ errorMessage: "댓글이 존재하지 않습니다." });
     } else {
       if (userId === comments.userId) {
         await Comments.update({ comment: comment }, { where: { commentId } });
         return res.json({ message: "댓글을 수정하였습니다." });
       } else {
-        return res
-          .status(400)
-          .json({ errorMessage: "내가 작성한 댓글이 아닙니다." });
+        return res.status(400).json({ errorMessage: "내가 작성한 댓글이 아닙니다." });
       }
     }
   } catch (err) {
