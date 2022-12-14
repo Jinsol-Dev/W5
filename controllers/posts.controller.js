@@ -1,8 +1,9 @@
 const PostsService = require("../services/Posts.Service");
 
 class PostsController {
-  postsService = new PostsService();
-
+  constructor() {
+    this.postsService = new PostsService();
+  }
   //게시글 생성
   createPost = async (req, res) => {
     try {
