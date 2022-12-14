@@ -10,7 +10,7 @@ module.exports = {
         type: Sequelize.DataTypes.INTEGER,
       },
       password: {
-        type: Sequelize.DataTypes.INTEGER,
+        type: Sequelize.DataTypes.STRING,
         allowNull: false,
       },
       nickname: {
