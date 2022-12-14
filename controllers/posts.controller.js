@@ -91,13 +91,6 @@ class PostsController {
       return res.status(200).json({ message: "게시글을 삭제하였습니다." });
     } catch (err) {
       console.error(err);
-<<<<<<< HEAD
-      return res.status(400).json({ message: err.message });
-    }
-  };
-
-  
-=======
       if (err.code) {
         return res.status(err.code).json({ message: err.message });
       } else {
@@ -105,7 +98,6 @@ class PostsController {
       }
     }
   };
->>>>>>> 2728c591a4c3cb239677401922ff8e9169c4ade3
 }
 
 module.exports = PostsController;

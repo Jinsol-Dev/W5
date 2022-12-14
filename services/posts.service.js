@@ -52,11 +52,6 @@ class PostsService {
       }
     }
   };
-<<<<<<< HEAD
-
-};
-=======
 }
->>>>>>> 2728c591a4c3cb239677401922ff8e9169c4ade3
 
 module.exports = PostsService;

@@ -4,10 +4,6 @@ class PostsRepository {
   constructor(postModel, postLikeModel) {
     this.postModel = postModel;
     this.postLikeModel = postLikeModel;
-<<<<<<< HEAD
-    
-=======
->>>>>>> 2728c591a4c3cb239677401922ff8e9169c4ade3
   }
 
   //게시글 생성
@@ -38,11 +34,7 @@ class PostsRepository {
 
   //게시글 상세 조회
   findDetailPost = async ({ postId }) => {
-<<<<<<< HEAD
-    const post = await this.postModel.findByPk(postId);    
-=======
     const post = await this.postModel.findByPk(postId);
->>>>>>> 2728c591a4c3cb239677401922ff8e9169c4ade3
     return post;
   };
 
@@ -55,11 +47,6 @@ class PostsRepository {
   deletePost = async ({ postId }) => {
     await this.postModel.destroy({ where: { postId } });
   };
-<<<<<<< HEAD
-
-};
-=======
 }
->>>>>>> 2728c591a4c3cb239677401922ff8e9169c4ade3
 
 module.exports = PostsRepository;
