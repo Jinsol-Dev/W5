@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app",
-    "test": " jest --forceExit",
-    "test:silent": "jest --silent --forceExit",
-    "test:coverage": "jest --coverage --forceExit",
-    "test:unit": "jest __tests__/unit --forceExit",
-    "test:integration": "jest __tests__/integration --forceExit"
+    "test": "set NODE_ENV=test jest --forceExit",
+    "test:silent": "set NODE_ENV=test jest --silent --forceExit",
+    "test:coverage": "set NODE_ENV=test jest --coverage --forceExit",
+    "test:unit": "set NODE_ENV=test jest test/unit --forceExit",
+    "test:integration": "set NODE_ENV=test jest test/integration --forceExit"
   },
   "keywords": [],
   "author": "",

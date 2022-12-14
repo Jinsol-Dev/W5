@@ -1,10 +1,10 @@
 const PostsLikeRepository = require("../repositories/postslike.repository");
 const PostsRepository = require("../repositories/posts.repository");
+const { Posts, Postlikes } = require('../models/index');
 
 class PostsLikeService {
-  constructor () {
-    this.postsLikeRepository = new PostsLikeRepository();
-    this.postsRepository = new PostsRepository();
+  postsLikeRepository = new PostsLikeRepository(Posts, Postlikes);
+  postsRepository = new PostsRepository(Posts);
   }
   
   //게시글 좋아요 등록
@@ -16,7 +16,7 @@ class PostsLikeService {
 
     const postsLike = await this.postsLikeRepository.postsLike({ userId, postId });
     if (!postsLike) {
-      await this.postsLikeRepository.createPostLike({ userId, postId });
+      const test = await this.postsLikeRepository.createPostLike({ userId, postId });
       return { message: "게시글 좋아" };
     } else {
       await this.postsLikeRepository.deletePostLike({ userId, postId });
@@ -33,6 +33,4 @@ class PostsLikeService {
       return likePosts;
     }
   };
-}
-
 module.exports = PostsLikeService;
