@@ -1,7 +1,9 @@
 const SignService = require("../services/sign.service");
 
 class SignController {
-  signService = new SignService();
+  constructor() {
+    this.signService = new SignService();
+  }
 
   createUser = async (req, res, next) => {
     const { nickname, password, confirm } = req.body;

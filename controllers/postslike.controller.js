@@ -1,7 +1,10 @@
 const PostsLikeService = require("../services/postslike.service");
 
 class PostsLikeController {
-  postsLikeService = new PostsLikeService();
+  constructor (){
+    this.postsLikeService = new PostsLikeService();
+  }
+  
 
   //게시글 좋아요 등록
   createPostLike = async (req, res) => {

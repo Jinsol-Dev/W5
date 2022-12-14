@@ -9,7 +9,7 @@
   "test": {
     "username": "root",
     "password": "4321aaaa",
-    "database": "Layered_architecture_pattern_test",
+    "database": "nodehomework_5_test_db",
     "host": "express-database.crtdgfoaxncr.ap-northeast-2.rds.amazonaws.com",
     "dialect": "mysql"
   },
