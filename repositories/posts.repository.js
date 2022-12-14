@@ -1,14 +1,14 @@
-const { Posts, Postlikes, sequelize } = require("../models");
+const { sequelize } = require("../models");
 
 class PostsRepository {
-  constructor() {
-    this.postsModel = Posts;
-    this.postLikeModel = Postlikes;    
+  constructor(postsModel, postLikeModel) {
+    this.postsModel = postsModel;
+    this.postLikeModel = postLikeModel;
   }
 
   //게시글 생성
-  creatPost = async ({ title, content, userId, nickname }) => {
-    await this.postsModel.create({ title, content, userId, nickname });
+  createPost = async ({ title, content, userId, nickname }) => {
+    return await this.postsModel.create({ title, content, userId, nickname });
   };
 
   //게시글 목록 조회
@@ -30,12 +30,12 @@ class PostsRepository {
 
   //게시글 수정
   updatePost = async ({ postId, title, content }) => {
-    await this.postsModel.update({ title: title, content: content }, { where: { postId } });
+    return await this.postsModel.update({ title: title, content: content }, { where: { postId } });
   };
 
   //게시글 삭제
   deletePost = async ({ postId }) => {
-    await this.postsModel.destroy({ where: { postId } });
+    return await this.postsModel.destroy({ where: { postId } });
   };
 }
 
