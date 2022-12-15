@@ -5,8 +5,8 @@ class CommentService {
     this.commentRepository = new CommentRepository();
   }
   //댓글 작성
-  createComment = async (userId, nickname, comment, postId) => {
-    const createCommentData = await this.commentRepository.createComment(userId, nickname, comment, postId);
+  createComment = async ({ userId, nickname, comment, postId }) => {
+    const createCommentData = await this.commentRepository.createComment({ userId, nickname, comment, postId });
 
     return createCommentData;
   };
@@ -19,20 +19,20 @@ class CommentService {
   };
 
   //댓글 수정
-  updateComment = async (userId, commentId, comment) => {
+  updateComment = async ({ userId, commentId, comment }) => {
     const commentData = await this.commentRepository.findComment(commentId);
 
     if (userId !== commentData.userId) {
       return "내가 작성한 댓글이 아닙니다.";
     }
-    const updateComment = await this.commentRepository.updateComment(userId, commentId, comment);
+    const updateComment = await this.commentRepository.updateComment({ commentId, comment });
 
     return updateComment;
   };
 
   //댓글 삭제
-  removeComment = async (userId, commentId) => {
-    const commentData = await this.commentRepository.findComment(commentId);
+  removeComment = async ({ userId, commentId }) => {
+    const commentData = await this.commentRepository.findComment({ commentId });
 
     if (!commentData) {
       return "댓글이 존재하지 않습니다.";
@@ -40,7 +40,7 @@ class CommentService {
     if (userId !== commentData.userId) {
       return "내가 작성한 댓글이 아닙니다.";
     }
-    const comment = await this.commentRepository.removeComment(userId, commentId);
+    const comment = await this.commentRepository.removeComment({ commentId });
 
     return comment;
   };

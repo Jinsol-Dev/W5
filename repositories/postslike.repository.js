@@ -1,12 +1,13 @@
-class PostsLikeRepository {
-  constructor(postModel, postLikeModel) {
-    //인자 입력 순서
+
+class PostsLikeService {
+  constructor( postModel,postLikeModel) {   
+
     this.postLikeModel = postLikeModel;
     this.postModel = postModel;
   }
 
   // 게시글 좋아요가 있는지 없는지 확인
-  postsLike = async ({ userId, postId }) => {
+  findPostsLike = async ({ userId, postId }) => {
     const isExistLike = await this.postLikeModel.findOne({ where: { userId, postId } });
     return isExistLike;
   };
@@ -33,4 +34,4 @@ class PostsLikeRepository {
   };
 }
 
-module.exports = PostsLikeRepository;
+module.exports = PostsLikeService;
