@@ -9,7 +9,7 @@ const mockpostLikeModel = () => ({
 })
 
 
-describe('Layered Architecture Pattern Posts Repository Unit Test', () => {
+describe('postlike Repository Layer Test', () => {
   let postsLikeRepository = new PostsLikeRepository();
   postsLikeRepository.postLikeModel = mockpostLikeModel(); // mock설정 완료
  
@@ -22,7 +22,7 @@ describe('Layered Architecture Pattern Posts Repository Unit Test', () => {
     postsLikeRepository.postLikeModel.findOne = jest.fn(() => {
       return "findOne Result"
     });
-    const result = await postsLikeRepository.postsLike({userId:5});
+    const result = await postsLikeRepository.findPostsLike({userId:5});
     
     
     expect(postsLikeRepository.postLikeModel.findOne).toHaveBeenCalledTimes(1);
