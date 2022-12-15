@@ -14,7 +14,7 @@ class CommentController {
       if (comment === "") {
         return res.status(400).json({ errorMessage: "댓글 내용을 입력해주세요." });
       }
-      const commentData = await this.commentService.createComment(userId, nickname, comment, postId);
+      const commentData = await this.commentService.createComment({ userId, nickname, comment, postId });
 
       res.status(200).json({ data: commentData });
     } catch (error) {
@@ -29,7 +29,7 @@ class CommentController {
     try {
       const comments = await this.commentService.findComments(postId);
 
-      res.status(200).json({ data: comments });
+      return res.status(200).json({ data: comments });
     } catch (error) {
       console.log(error);
       res.status(400).json({ errorMessage: "댓글 조회에 실패하였습니다." });
@@ -46,9 +46,9 @@ class CommentController {
       if (comment === "") {
         return res.status(404).json({ errorMessage: "댓글이 존재하지 않습니다." });
       }
-      const updateComment = await this.commentService.updateComment(userId, commentId, comment);
+      const updateComment = await this.commentService.updateComment({ userId, commentId, comment });
 
-      res.status(200).json({ data: updateComment });
+      return res.status(200).json({ data: updateComment });
     } catch (error) {
       console.error(error);
       res.status(400).json({ errorMessage: "댓글 수정에 실패하였습니다." });
@@ -61,9 +61,9 @@ class CommentController {
     const { commentId } = req.params;
 
     try {
-      const comment = await this.commentService.removeComment(userId, commentId);
+      const comment = await this.commentService.removeComment({ userId, commentId });
 
-      res.status(200).json({ data: comment });
+      return res.status(200).json({ data: comment });
     } catch (error) {
       console.error(error);
       res.status(400).json({ errorMessage: "댓글 삭제에 실패하였습니다." });
