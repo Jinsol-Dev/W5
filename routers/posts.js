@@ -20,5 +20,4 @@ router.put("/:postId", auth, postsController.updatePost);
 //게시글 삭제
 router.delete("/:postId", auth, postsController.deletePost);
 
-
 module.exports = router;

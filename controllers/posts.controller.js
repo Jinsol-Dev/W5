@@ -9,14 +9,13 @@ class PostsController {
     try {
       const { title, content } = req.body;
       const { userId, nickname } = res.locals.user;
-
       if (!title || !content) {
         return res.status(400).json({ message: "데이터 형식이 올바르지 않습니다." });
       }
       await this.postsService.createPost({ title, content, userId, nickname });
       return res.status(200).json({ message: "게시글을 생성하였습니다" });
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       if (err.code) {
         return res.status(err.code).json({ message: err.message });
       } else {
@@ -28,7 +27,7 @@ class PostsController {
   //게시글 목록 조회
   findAllPosts = async (req, res) => {
     try {
-      const posts = await this.postsService.findAllPost();
+      const posts = await this.postsService.findAllPosts();
       return res.json({ posts });
     } catch (err) {
       console.error(err);

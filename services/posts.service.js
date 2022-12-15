@@ -6,12 +6,12 @@ class PostsService {
   }
   //게시글 생성
   createPost = async ({ title, content, userId, nickname }) => {
-    return await this.postsRepository.creatPost({ title, content, userId, nickname });
+    return await this.postsRepository.createPost({ title, content, userId, nickname });
   };
 
   //게시글 조회
-  findAllPost = async () => {
-    const posts = await this.postsRepository.findAllPost();
+  findAllPosts = async () => {
+    const posts = await this.postsRepository.findAllPosts();
     return posts;
   };
 
@@ -32,7 +32,6 @@ class PostsService {
   //게시글 삭제
   deletePost = async ({ userId, postId }) => {
     const isExisPost = await this.postsRepository.findDetailPost({ postId });
-    console.log(isExisPost);
     if (!isExisPost) {
       throw { message: "게시글 존재하지 않습니다.", code: 404 };
     } else {

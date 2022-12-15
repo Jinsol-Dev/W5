@@ -12,7 +12,7 @@ class PostsRepository {
   };
 
   //게시글 목록 조회
-  findAllPost = async () => {
+  findAllPosts = async () => {
     const posts = await this.postsModel.findAll({
       order: [["postId", "DESC"]],
       include: [{ model: this.postLikeModel, attributes: [] }],
