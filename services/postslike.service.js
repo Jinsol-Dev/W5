@@ -1,8 +1,9 @@
 const PostsLikeRepository = require("../repositories/postslike.repository");
 const PostsRepository = require("../repositories/posts.repository");
-const { Posts, Postlikes } = require('../models/index');
+const { Posts, Postlikes } = require("../models/index");
 
 class PostsLikeService {
+
   constructor (){
   this.postsLikeRepository = new PostsLikeRepository(Posts, Postlikes);
   this.postsRepository = new PostsRepository(Posts);
@@ -36,5 +37,7 @@ class PostsLikeService {
       return likePosts;
     }
   };
+
 };
+
 module.exports = PostsLikeService;

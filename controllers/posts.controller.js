@@ -9,7 +9,6 @@ class PostsController {
     try {
       const { title, content } = req.body;
       const { userId, nickname } = res.locals.user;
-
       if (!title || !content) {
         return res.status(400).json({ message: "데이터 형식이 올바르지 않습니다." });
       }
@@ -28,7 +27,7 @@ class PostsController {
   //게시글 목록 조회
   findAllPosts = async (req, res) => {
     try {
-      const posts = await this.postsService.findAllPost();
+      const posts = await this.postsService.findAllPosts();
       return res.json({ posts });
     } catch (err) {
       console.error(err);
