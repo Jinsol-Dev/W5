@@ -39,7 +39,7 @@ describe("posts Controller Layer Test", () => {
       return "생성완료";
     });
 
-    const post = await postsController.createPost(mockRequest, mockResponse);
+    await postsController.createPost(mockRequest, mockResponse);
 
     expect(postsController.postsService.createPost).toHaveBeenCalledTimes(1);
     expect(mockResponse.status).toHaveBeenCalledWith(200);

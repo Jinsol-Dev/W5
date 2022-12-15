@@ -15,7 +15,7 @@ class PostsController {
       await this.postsService.createPost({ title, content, userId, nickname });
       return res.status(200).json({ message: "게시글을 생성하였습니다" });
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       if (err.code) {
         return res.status(err.code).json({ message: err.message });
       } else {
