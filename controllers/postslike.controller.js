@@ -8,14 +8,14 @@ class PostsLikeController {
 
   //게시글 좋아요 등록
   createPostLike = async (req, res) => {
-    try {
-      const { userId } = res.locals.user;
-      const { postId } = req.params;
-      const test = await this.postsLikeService.createPostLike({ userId, postId }); //service와의 연결점
-      res.status(200).json({ result: test });
+    try {      
+      const { userId } = res.locals.user;     
+      const { postId } = req.params;      
+      await this.postsLikeService.createPostLike({ userId, postId }); //service와의 연결점      
+      return res.status(200).json({ message: "게시글 좋아요에 성공했습니다." });
     } catch (err) {
       console.error(err);
-      res.status(400).json({ errorMessage: "게시글 좋아요에 실패하였습니다." });
+      return res.status(400).json({ errorMessage: "게시글 좋아요에 실패하였습니다." });
     }
   };
 
@@ -23,8 +23,8 @@ class PostsLikeController {
   getLikePost = async (req, res) => {
     try {
       const { userId } = res.locals.user;
-      const likePosts = await this.postsLikeService.findAllLikePost({ userId });
-      res.json({ likePosts });
+      const likePosts = await this.postsLikeService.findAllLikePost(userId);
+      return res.status(200).json({ likePosts });
     } catch (err) {
       console.log(err);
       if (err.code) {

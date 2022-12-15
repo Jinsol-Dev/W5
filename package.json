@@ -8,7 +8,7 @@
     "test": "set NODE_ENV=test jest --forceExit",
     "test:silent": "set NODE_ENV=test jest --silent --forceExit",
     "test:coverage": "set NODE_ENV=test jest --coverage --forceExit",
-    "test:unit": "set NODE_ENV=test jest test/unit --forceExit",
+    "test:unit": "set NODE_ENV=test jest test/unit --coverage --verbose --forceExit",
     "test:integration": "set NODE_ENV=test jest test/integration --forceExit"
   },
   "keywords": [],
