@@ -6,7 +6,7 @@ const commentsRouter = require("./comments.js");
 const signRouter = require("./sign.js");
 const likeRouter = require("./likes.js");
 
-router.use("/", signRouter);
+router.use("/signup", signRouter);
 router.use("/posts", [likeRouter, postsRouter]);
 router.use("/comments", commentsRouter);
 
