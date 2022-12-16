@@ -10,7 +10,6 @@
     "test:coverage": "set NODE_ENV=test jest --coverage --forceExit",
     "test:unit": "set NODE_ENV=test jest test/unit --coverage --verbose --forceExit",
     "test:integration": "set NODE_ENV=test jest test/integration --forceExit"
-
   },
   "keywords": [],
   "author": "",
